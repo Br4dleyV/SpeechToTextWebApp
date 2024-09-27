@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Speech to Text!</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="https://kit.fontawesome.com/2690aac09c.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<h1>Click the microphone icon to start <strong>speech to text!</strong></h1>
+<button id="mic-button">
+    <i class="fa-solid fa-microphone"></i>
+</button>
+<p id="status-label">Inactive..</p>
+
+<p id="output-paragraph"></p>
+
+<script>
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+    recognition.lang = "en-US"
+    recognition.continuous = true
+    let started = false
+
+    const micButton = document.getElementById("mic-button")
+    const outputParagraph = document.getElementById("output-paragraph")
+    const statusLabel = document.getElementById("status-label")
+
+    recognition.onstart = () => {
+        statusLabel.textContent = "Listening..."
+    }
+
+    recognition.onresult = (event) => {
+        const transcript = event.results[event.results.length - 1][0].transcript;
+        outputParagraph.textContent = outputParagraph.textContent + " " + transcript;
+    }
+
+    recognition.onend = () => {
+        statusLabel.textContent = "Inactive.."
+    }
+
+    micButton.addEventListener('click', () => {
+        if (started === false) {
+            started = true;
+            recognition.start();
+        } else {
+            recognition.stop();
+            started = false;
+        }
+    })
+
+</script>
+
+</body>
+</html>
