@@ -1,6 +1,6 @@
 // Get recognition kits
 recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
-recognition.lang = "nl-BE"
+recognition.lang = "en-US"
 recognition.continuous = true
 // Bool if recognition is active
 let listeningToUser = false
@@ -25,12 +25,12 @@ window.onload = function () {
 
     // Edit status label to listening on click
     recognition.onstart = () => {
-        statusLabel.textContent = "Aan het luisteren..."
+        statusLabel.textContent = "Listening..."
     }
 
     // Change back status label to inactive on click
     recognition.onend = () => {
-        statusLabel.textContent = "Inactief.."
+        statusLabel.textContent = "Inactive.."
     }
 
     // Add text from recognition into output paragraph
